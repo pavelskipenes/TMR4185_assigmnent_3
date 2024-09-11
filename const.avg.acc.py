@@ -19,13 +19,18 @@ def ny_const(m, k, c, P, h, u0, udot0):
      u = np.zeros(len(P)) #lage tomt u-array som kan endres ved indeksering
      u[0] = u0
      u[1] = u1
+
+     #definere verdier som skal endres kontinuerlig i løkke
      u_doubledot_i = u_doubledot_0
      u_iplus1 = u1
-     u_i = 0
+     u_i = u0
      u_dot_i = udot0
+     u_doubledot_iplus1 = (2*h*(P[i+1] - k*u_iplus1 - c*u_i - c*u_doubledot_i / 2*h)
+                                /(2*h*m + c))
+     u_dot_iplus1 = u_dot_i + 1/2 * (u_doubledot_i + u_doubledot_iplus1)*h
 
      for i in range(1, len(P) - 1):#vil ikke indeksere utenfor rammer med i + 1
-          #Prøver å begynne med i = 1 slik at første verdi som legge inn i u er u[2]
+          #Prøver å begynne med i = 1 slik at første verdi som legge inn i u er u[]
           # definerer nye i verdier basert på i+1 fra forrige i
           u_doubledot_i = u_doubledot_iplus1
           u_i = u_iplus1
