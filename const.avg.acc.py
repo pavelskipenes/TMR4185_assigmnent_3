@@ -1,6 +1,6 @@
 #rasnlch
 import numpy as np
-def const_avg_acc(m, k , c ,P, h , u0 , udot0):
+def const_gammel(m, k , c ,P, h , u0 , udot0):
     u_doubledot_0 = ((P[h] - c * udot0 - k * u0)/m) # fra equilibrium for t= 0 fra 3.79
     u = ((P[h + 1] + m*u_doubledot_0 
          + (4*m/h + c)*udot0 
@@ -9,7 +9,7 @@ def const_avg_acc(m, k , c ,P, h , u0 , udot0):
     return u
 
 
-def ny_const(m, k, c, P, h, u0, udot0):
+def const_avg_acc(m, k, c, P, h, u0, udot0):
     # setter opp oppsett for om hele arrayet skal tas i en engang
      u_doubledot_0 = ((P[0] - c * udot0 - k * u0)/m) # fra equilibrium for t= 0 fra 3.79
      u1 = ((P[1] + m*u_doubledot_0 
@@ -25,7 +25,7 @@ def ny_const(m, k, c, P, h, u0, udot0):
      u_iplus1 = u1
      u_i = u0
      u_dot_i = udot0
-     u_doubledot_iplus1 = (2*h*(P[i+1] - k*u_iplus1 - c*u_i - c*u_doubledot_i / 2*h)
+     u_doubledot_iplus1 = (2*h*(P[1] - k*u_iplus1 - c*u_i - c*u_doubledot_i / 2*h)
                                 /(2*h*m + c))
      u_dot_iplus1 = u_dot_i + 1/2 * (u_doubledot_i + u_doubledot_iplus1)*h
 
