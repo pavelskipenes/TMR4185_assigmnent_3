@@ -17,30 +17,31 @@ def ny_const(m, k, c, P, h, u0, udot0):
           + (4*m/h**2 + 2*c/h)*u0)
           /(4*m/h**2 + 2*c/h + k))#Hentet fra 3.80
      u = np.zeros(len(P)) #lage tomt u-array som kan endres ved indeksering
+     u[0] = u0
+     u[1] = u1
+     u_doubledot_i = u_doubledot_0
+     u_iplus1 = u1
+     u_i = 0
+     u_dot_i = udot0
 
-
-     for i in range(len(P) - 1):#vil ikke indeksere utenfor rammer med i + 1
-          if i == 1:#Kan være dette må være 0 og neste større enn null, 
-                    #men forstår ikke hvordan jeg skal få verdier for 0
-               u_doubledot_i = u_doubledot_0
-               u_iplus1 = u1
-               u_i = 0
-               u_dot_i = udot0
-               #Når vi finner rett grense kan dette settes før løkke og heller endre range (fjerne if)
-
-          elif i > 1: # definerer nye i verdier basert på i+1 fra forrige i
-               u_doubledot_i = u_doubledot_iplus1
-               u_i = u_iplus1
-               u_dot_i = u_dot_iplus1
+     for i in range(1, len(P) - 1):#vil ikke indeksere utenfor rammer med i + 1
+          #Prøver å begynne med i = 1 slik at første verdi som legge inn i u er u[2]
+          # definerer nye i verdier basert på i+1 fra forrige i
+          u_doubledot_i = u_doubledot_iplus1
+          u_i = u_iplus1
+          u_dot_i = u_dot_iplus1
                
-               #kjører utregning i henhold til metode
-               u_doubledot_iplus1 = (2*h*(P[i+1] - k*u_iplus1 - c*u_i - c*u_doubledot_i / 2*h)
+          #kjører utregning i henhold til metode
+          u_doubledot_iplus1 = (2*h*(P[i+1] - k*u_iplus1 - c*u_i - c*u_doubledot_i / 2*h)
                                 /(2*h*m + c)) #Mishandling fra å sette 3.78 inn i 3.79
-               u_dot_iplus1 = u_dot_i + 1/2 * (u_doubledot_i + u_doubledot_iplus1)*h
-               u_iplus1 = ((P[i+1] + m*u_doubledot_i 
+               
+          u_dot_iplus1 = u_dot_i + 1/2 * (u_doubledot_i + u_doubledot_iplus1)*h
+               
+          u_iplus1 = ((P[i+1] + m*u_doubledot_i 
                             + (4*m/h + c)*u_dot_i 
                             + (4*m/h**2 + 2*c/h)*u_i)
                             /(4*m/h**2 + 2*c/h + k))
+          
           u[i + 1] = u_iplus1
      
      return u
