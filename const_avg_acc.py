@@ -1,13 +1,5 @@
-#rasnlch
-import numpy as np
-def const_gammel(m, k , c ,P, h , u0 , udot0):
-    u_doubledot_0 = ((P[h] - c * udot0 - k * u0)/m) # fra equilibrium for t= 0 fra 3.79
-    u = ((P[h + 1] + m*u_doubledot_0 
-         + (4*m/h + c)*udot0 
-         + (4*m/h**2 + 2*c/h)*u0)
-         /(4*m/h**2 + 2*c/h + k))#Hentet fra 3.80
-    return u
 
+import numpy as np
 
 def const_avg_acc(m, k, c, P, h, u0, udot0):
     # setter opp oppsett for om hele arrayet skal tas i en engang
