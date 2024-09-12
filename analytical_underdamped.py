@@ -17,3 +17,5 @@ def voldsfunksjon(c, m, u0, udot0, k, P0, omega, t, epsilon):
     u = ((np.exp(-zeta*omega_0*t)*R*np.cos(omega_d*t - theta))
          +(stor_u*np.cos(omega*t + epsilon + phi)))
     return u
+
+
