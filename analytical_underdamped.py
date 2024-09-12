@@ -1,6 +1,11 @@
 import numpy as np
 
-def voldsfunksjon(u0, udot0, k, P0, omega, omega_d, omega_0, t, epsilon, beta, zeta):
+def voldsfunksjon(c, m, u0, udot0, k, P0, omega, t, epsilon):
+    #Generell løsn for zeta og beta
+    omega_0 = np.sqrt(k/m)
+    zeta = c/(2*np.sqrt(m*k)) #zeta er damping ratio
+    beta = omega/omega_0
+    omega_d = omega_0*np.sqrt(1-zeta**2)
     # Løser lign i rekkefølge slik at verdier finnes
     stor_u = (P0/k)/np.sqrt((1-beta**2)**2 + (2*zeta*beta)**2)
     phi = np.arctan((-2*zeta*beta)/(1-beta**2))
