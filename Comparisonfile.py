@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 from const_avg_acc import const_avg_acc
 from runge_kutta4 import runge_kutta4
 from dis_state_space import dis_state_space
-from analytical_underdamped import voldsfunksjon
+from analytical_underdamped import analytical_underdamped
 
 # Input dynamic system characteristics
 m = 1  # mass, kg
@@ -29,7 +29,7 @@ P = amp * np.cos(omega * t + eps1)
 u = const_avg_acc(m, k, c, P, h, u0, udot0)
 urk = runge_kutta4(m, k, c, P, h, u0, udot0)
 uss = dis_state_space(m, k, c, P, h, u0, udot0)
-uas = voldsfunksjon(c, m, u0, udot0, k, P[0], omega, t, eps1)
+uas = analytical_underdamped(c, m, u0, udot0, k, P[0], omega, t, eps1)
 
 # Plot
 plt.figure(1)
@@ -44,7 +44,7 @@ plt.subplot(212)
 plt.plot(t, u, 'k', label='CAA')
 plt.plot(t, urk, 'b--', label='RK')
 plt.plot(t, uss, 'r--', label='DSS')
-plt.plot(t, uas, 'y--', label='VOLD')
+plt.plot(t, uas, 'y--', label='AU')
 plt.legend()
 plt.grid(True)
 plt.xlabel('time, s')
@@ -69,7 +69,7 @@ transient_durations = {}
 plt.figure(figsize=(14, 10))
 
 for case, params in cases.items():
-    u = voldsfunksjon(**params, t=t)
+    u = analytical_underdamped(**params, t=t)
     plt.plot(t, u, label=f"{case}")
 
     # Calculate steady-state amplitude
