@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-def voldsfunksjon(c, m, u0, udot0, k, P0, omega, t, epsilon):
+def analytical_underdamped(c, m, u0, udot0, k, P0, omega, t, epsilon):
     #Generell løsn for zeta og beta
     omega_0 = np.sqrt(k/m)
     zeta = c/(2*np.sqrt(m*k)) #zeta er damping ratio
@@ -21,26 +21,5 @@ def voldsfunksjon(c, m, u0, udot0, k, P0, omega, t, epsilon):
 
 
 
-# Parameters for different cases
-cases = {
-    "Resonance": {"c": 0.5, "m": 1.0, "u0": 0.0, "udot0": 0.0, "k": 1.0, "P0": 1.0, "omega": 1.0, "epsilon": 0.0},
-    "Stiffness-Dominated": {"c": 0.5, "m": 1.0, "u0": 0.0, "udot0": 0.0, "k": 10.0, "P0": 1.0, "omega": 0.5, "epsilon": 0.0},
-    "Inertia-Dominated": {"c": 0.5, "m": 1.0, "u0": 0.0, "udot0": 0.0, "k": 1.0, "P0": 1.0, "omega": 2.0, "epsilon": 0.0}
-}
 
-# Time vector
-t = np.linspace(0, 20, 1000)
-
-plt.figure(figsize=(12, 8))
-
-for case, params in cases.items():
-    u = voldsfunksjon(**params, t=t)
-    plt.plot(t, u, label=f"{case}")
-
-plt.title("System Response for Different Types of Systems")
-plt.xlabel("Time")
-plt.ylabel("Displacement")
-plt.legend()
-plt.grid(True)
-plt.show()
 
