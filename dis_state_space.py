@@ -1,10 +1,10 @@
 import numpy as np
 
-def state_space(m,k,c,P,h,u0,udot0):
+def dis_state_space(m,k,c,P,h,u0,udot0):
     n=len(P)    #fordi P er en n lang vektor
 
-    u=np.zeroes(n)
-    udot=np.zeroes(n)
+    u=np.zeros(n)
+    udot=np.zeros(n)
 
     u[0]=u0
     udot[0]=udot0
