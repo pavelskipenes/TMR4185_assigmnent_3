@@ -3,7 +3,7 @@ import numpy as np
 
 def const_avg_acc(m, k, c, P, h, u0, udot0):
     # setter opp oppsett for om hele arrayet skal tas i en engang
-     u_doubledot_0 = (P[0] - k*udot0*k - u0*c) / m # fra equilibrium for t= 0 fra 3.79
+     u_doubledot_0 = (P[0] - c*udot0 - u0*k)/m # fra equilibrium for t= 0 fra 3.79
      u1 = (P[1] + m * u_doubledot_0 + (4 * m / h + c) * udot0 + (4 * m / h**2 + 2 * c / h) * u0) / (4 * m / h**2 + 2 * c / h + k)#Hentet fra 3.80
      
      u = np.zeros(len(P)) #lage tomt u-array som kan endres ved indeksering
