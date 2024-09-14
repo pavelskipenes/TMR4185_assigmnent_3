@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 from const_avg_acc import const_avg_acc
 from runge_kutta4 import runge_kutta4
 from dis_state_space import dis_state_space
-
+from analytical_underdamped import analytical_underdamped
 # Input
 
 # Input dynamic system characteristics
@@ -13,10 +13,11 @@ k = 1  # stiffness, N/m
 c = 0.5  # damping, N/s
 u0 = 0.2  # initial position, m
 udot0 = 0.1  # initial velocity, m/s
-loadtype = 2  # see if statements below for definition
+loadtype = 0  # see if statements below for definition
+eps1 = np.pi
 
 h = 0.1  # time increment, s
-tmax = 400  # time duration, s
+tmax = 25  # time duration, s
 t = (np.arange(0, tmax, h))
 P = np.zeros(len(t))  # initialize load vector to zero
 
@@ -47,7 +48,7 @@ else:  # (loadtype == 3) short duration
 u = const_avg_acc(m, k, c, P, h, u0, udot0)
 urk = runge_kutta4(m, k, c, P, h, u0, udot0)
 uss = dis_state_space(m, k, c, P, h, u0, udot0)
-
+uaa = analytical_underdamped(c, m, u0, udot0, k, P[0], omega, t, eps1)
 # Plot
 plt.figure(1)
 plt.subplot(211)
@@ -61,6 +62,7 @@ plt.subplot(212)
 plt.plot(t, u, 'k', label='CAA')
 plt.plot(t, urk, 'b--', label='RK')
 plt.plot(t, uss, 'r--', label='DSS')
+plt.plot(t, uaa, 'g--', label="analytical")
 plt.legend()
 plt.grid(True)
 plt.xlabel('time, s')
