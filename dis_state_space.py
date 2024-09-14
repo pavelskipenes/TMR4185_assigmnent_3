@@ -1,6 +1,6 @@
 import numpy as np
 
-def state_space(m,k,c,P,h,u0,udot0):
+def dis_state_space(m,k,c,P,h,u0,udot0):
     n=len(P)    #fordi P er en n lang vektor
     
     u=np.zeros(n)
