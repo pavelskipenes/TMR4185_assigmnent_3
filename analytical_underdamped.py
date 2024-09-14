@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-def analytical_underdamped(c, m, u0, udot0, k, P0, omega, t, epsilon):
+def analytical_underdamped(c, m, u0, udot0, k, P0, omega, t, epsilon=0):
     #Generell løsn for zeta og beta
     omega_0 = np.sqrt(k/m)
     zeta = c/(2*np.sqrt(m*k)) #zeta er damping ratio
