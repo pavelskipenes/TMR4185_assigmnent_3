@@ -69,7 +69,7 @@ transient_durations = {}
 plt.figure(figsize=(14, 10))
 
 for case, params in cases.items():
-    u = analytical_underdamped(**params, t=t)
+    u = analytical_underdamped(**params, time=t)
     plt.plot(t, u, label=f"{case}")
 
     # Calculate steady-state amplitude
