@@ -13,8 +13,11 @@ zeta_values = [0.01, 0.1, 1]  # Different damping ratios
 methods = ['CAA', 'RK', 'DSS']  # Numerical methods
 
 # Function for displacement response (mock-up)
+
+
 def displacement_response(t, omega_0, zeta):
     return np.exp(-zeta * t) * np.sin(omega_0 * t)
+
 
 # Prepare figure and axes
 fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(10, 8))
