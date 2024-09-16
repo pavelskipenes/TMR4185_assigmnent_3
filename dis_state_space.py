@@ -1,26 +1,28 @@
 import numpy as np
+from scipy.linalg import expm
 
 
-def dis_state_space(m, k, c, P, h, u0, udot0):
-    n = len(P)  # fordi P er en n lang vektor
+def dis_state_space(
+        mass: float,
+        stiffness: float,
+        damping: float,
+        forces: list[float],
+        time_step: float,
+        displacement_initial: float,
+        velocity_initial: float):
 
-    u = np.zeros(n)
-    udot = np.zeros(n)
+    A = np.array([[0, 1], [-stiffness/mass, -damping/mass]])
+    B = np.array([[0], [1]])
 
-    u[0] = u0
-    udot[0] = udot0
+    A_d = expm(A * time_step)
+    B_d = np.linalg.inv(A) @ (A_d - np.eye(A.shape[0])) @ B
 
-    x = np.array([u, udot])
-    A = np.array([[0, 1], [-k/m, -c/m]])  # matriseform for newton 2.L
-    B = np.array([[0], [1]])  # bare mhp last for x_2 derivert->akselerasjon
+    states = np.array([[displacement_initial], [velocity_initial]])
 
-    # tar ikke hensyn til C, ettersom forholdstallet bare er 1.
+    displacements = []
 
-    for i in range(1, n):
-        dx = A@x + B*P[i-1]
-        x = x+dx*h
+    for force in forces:
+        states = A_d @ states + B_d * force
+        displacements.append(states[0, 0])
 
-        u[i] = x[0][0]
-        udot[i] = x[0][1]
-
-    return u
+    return displacements
