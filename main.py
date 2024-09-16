@@ -4,7 +4,6 @@ import matplotlib.pyplot as plt
 from const_avg_acc import const_avg_acc
 from runge_kutta4 import runge_kutta4
 from dis_state_space import dis_state_space
-from analytical_underdamped import analytical_underdamped_split
 from analytical_underdamped import analytical_underdamped
 
 # Input
@@ -48,34 +47,17 @@ else:  # (loadtype == 3) short duration
 u = const_avg_acc(m, k, c, P, h, u0, udot0)
 urk = runge_kutta4(m, k, c, P, h, u0, udot0)
 uss = dis_state_space(m, k, c, P, h, u0, udot0)
-analytical_stationary, analytical_transient = analytical_underdamped_split(c, m, u0,udot0, k,10,omega, t, 0)
-analytical = analytical_underdamped(c, m, u0,udot0, k,10,omega, t, 0)
 
-# ignore plotting the impulse load as it's not that interesting
-#plt.figure(1)
-#plt.subplot(211)
-#plt.plot(t, P)
-#plt.grid(True)
-#plt.xlabel('time, s')
-#plt.ylabel('P, N')
-#plt.xlim((0, tmax))
-
-#plt.subplot(212)
 plt.plot(t, u, 'k', label='CAA')
 plt.plot(t, urk, 'b--', label='RK')
 plt.plot(t, uss, 'r--', label='DSS')
-plt.plot(t, analytical_transient, 'g-', label='analytical transient')
-plt.plot(t, analytical_stationary, 'y-', label='analytical stationary')
-plt.plot(t, analytical, 'y-', label='analytical')
 plt.legend()
 plt.grid(True)
 plt.xlabel('time, s')
 plt.ylabel('u, m')
-plt.savefig("plots/analytical_and_numerical_aproximations.png")
+plt.savefig("plots/numerical_aproximations.png")
 plt.clf()
 
-plt.plot(t, analytical_transient, 'g-', label='analytical transient')
-plt.plot(t, analytical_stationary, 'y-', label='analytical stationary')
 plt.legend()
 plt.grid(True)
 plt.xlabel('time, s')
